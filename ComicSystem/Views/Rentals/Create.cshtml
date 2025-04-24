@@ -1,0 +1,37 @@
+@model ComicSystem.ViewModels.RentalCreateViewModel
+<h2>Create Rental for @Model.Customer.FullName</h2>
+<form asp-action="Create" method="post">
+  @Html.AntiForgeryToken()
+  <div asp-validation-summary="All" class="text-danger"></div>
+  <input type="hidden" asp-for="CustomerId" />
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label asp-for="RentalDate"></label>
+        <input asp-for="RentalDate" class="form-control" type="date"/>
+      </div>
+      <div class="form-group">
+        <label asp-for="ReturnDate"></label>
+        <input asp-for="ReturnDate" class="form-control" type="date"/>
+      </div>
+      <div class="form-group">
+        <label asp-for="SelectedComicBookId">Select Book</label>
+        <select asp-for="SelectedComicBookId" class="form-control"
+                asp-items="@(new SelectList(Model.ComicBooks, "ComicBookId","Title"))"></select>
+      </div>
+      <div class="form-group">
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-control" type="number"/>
+      </div>
+      <div class="form-group">
+        <label asp-for="PricePerDay"></label>
+        <input asp-for="PricePerDay" class="form-control" type="number" step="0.01"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Rental</button>
+    </div>
+  </div>
+</form>
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
